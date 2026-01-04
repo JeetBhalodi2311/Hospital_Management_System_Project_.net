@@ -1,0 +1,177 @@
+﻿@model DataTable
+@using System.Data
+
+@{
+    ViewData["Title"] = "Department List";
+}
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+<style>
+    table th, table td {
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f3f7ff;
+    }
+
+    .status-badge {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+
+    .active-yes {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .active-no {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+</style>
+
+<!-- Breadcrumb and Title -->
+<div class="container mt-4">
+    <h4 class="fw-bold text-primary"><i class="bi bi-building-fill me-2"></i>Department List</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light px-3 py-2 rounded shadow-sm">
+            <li class="breadcrumb-item"><a href="/Dashboard" class="text-decoration-none text-dark">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/Department/DepartmentAddEdit" class="text-decoration-none text-dark">Department Add/Edit</a></li>
+            <li class="breadcrumb-item active text-primary" aria-current="page">Department List</li>
+        </ol>
+    </nav>
+</div>
+
+<!-- Add Department Button & Search -->
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between mb-3 align-items-center flex-wrap">
+
+        <div class="d-flex gap-2 mb-2">
+
+            <!-- Export Dropdown -->
+            <div class="dropdown">
+                <button class="btn btn-outline-primary shadow-sm dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-download me-1"></i> Export
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                    <li>
+                        <a class="dropdown-item" href="/Department/ExportToExcel">
+                            <i class="bi bi-file-earmark-excel me-1 text-success"></i> Excel
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="/Department/ExportToPDF">
+                            <i class="bi bi-file-earmark-pdf me-1 text-danger"></i> PDF
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <a href="/Department/DepartmentAddEdit" class="btn btn-success shadow-sm">
+                <i class="bi bi-plus-circle me-1"></i> Add Department
+            </a>
+            <a href="/Department/DeleteAll" class="btn btn-danger shadow-sm"
+               onclick="return confirm('Are you sure you want to delete ALL records?');">
+                <i class="bi bi-trash3-fill me-1"></i> Delete All
+            </a>
+
+        </div>
+    </div>
+
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @* @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    } *@
+
+    <!-- Table Section -->
+    <div class="table-responsive shadow-sm rounded" style="max-height: 70vh; overflow-y: auto;">
+        <table class="table table-hover table-bordered align-middle" id="departmentTable">
+            <thead class="table-primary text-center">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Is Active</th>
+                    <th>Created</th>
+                    <th>Modified</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow dept in Model.Rows)
+                {
+                    <tr>
+                        <td class="text-center">@dept["DepartmentID"]</td>
+                        <td>@dept["DepartmentName"]</td>
+                        <td>@dept["Description"]</td>
+                        <td class="text-center">
+                            @if (Convert.ToBoolean(dept["IsActive"]))
+                            {
+                                <span class="badge bg-success">Yes</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">No</span>
+                            }
+                        </td>
+                        <td>@Convert.ToDateTime(dept["Created"]).ToString("yyyy-MM-dd")</td>
+                        <td>@Convert.ToDateTime(dept["Modified"]).ToString("yyyy-MM-dd")</td>
+                        <td class="text-center">
+                            <div class="d-flex justify-content-center gap-2">
+                                <a href="@Url.Action("DepartmentAddEdit", "Department", new { DepartmentID = dept["DepartmentID"] })" class="btn btn-sm btn-primary">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <a asp-controller="Department" asp-action="DepartmentDelete" asp-route-ID="@dept["DepartmentID"]" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Search Filter Script -->
+<script>
+    document.getElementById("searchInput").addEventListener("keyup", function () {
+        let input = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#departmentTable tbody tr");
+
+        rows.forEach(row => {
+            let text = row.innerText.toLowerCase();
+            row.style.display = text.includes(input) ? "" : "none";
+        });
+    });
+</script>

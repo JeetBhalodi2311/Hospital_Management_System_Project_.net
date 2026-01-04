@@ -1,0 +1,140 @@
+﻿@* @model Hospital_Management_System.Models.DepartmentModel
+
+<!-- Breadcrumb and Title Section -->
+<div class="container mt-4">
+    <h4 class="fw-bold text-primary"><i class="bi bi-building-add me-2"></i>Department Add/Edit</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light px-3 py-2 rounded shadow-sm">
+            <li class="breadcrumb-item"><a href="/Dashboard" class="text-decoration-none text-dark">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/Department/DepartmentList" class="text-decoration-none text-dark">Department List</a></li>
+            <li class="breadcrumb-item active text-primary" aria-current="page">Department Add/Edit</li>
+        </ol>
+    </nav>
+</div>
+
+<!-- Department Form Section -->
+<div class="container mt-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-plus-square me-2"></i>Enter Department Details</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label asp-for="DepartmentName" class="form-label fw-semibold">Department Name</label>
+                        <input asp-for="DepartmentName" type="text" name="DepartmentName" class="form-control" placeholder="Enter department name" required />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="UserID" class="form-label fw-semibold">User ID</label>
+                        <input asp-for="UserID" type="number" name="UserID" class="form-control" placeholder="Enter User ID" required />
+                    </div>
+
+                    <div class="col-md-12">
+                        <label asp-for="Description" class="form-label fw-semibold">Description</label>
+                        <textarea asp-for="Description" name="Description" rows="3" class="form-control" placeholder="Optional description..."></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <label>
+                            <input asp-for="IsActive" type="checkbox" />
+                            Is Active
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-save2 me-1"></i> Save Department
+                    </button>
+                    <a href="/Department/DepartmentList" class="btn btn-secondary ms-2 px-4">
+                        <i class="bi bi-arrow-left me-1"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+ *@
+ @model Hospital_Management_System.Models.DepartmentModel
+
+<!-- Breadcrumb and Title Section -->
+<div class="container mt-4">
+    <h4 class="fw-bold text-primary"><i class="bi bi-building-add me-2"></i>Department Add/Edit</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light px-3 py-2 rounded shadow-sm">
+            <li class="breadcrumb-item"><a href="/Dashboard" class="text-decoration-none text-dark">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/Department/DepartmentList" class="text-decoration-none text-dark">Department List</a></li>
+            <li class="breadcrumb-item active text-primary" aria-current="page">Department Add/Edit</li>
+        </ol>
+    </nav>
+</div>
+
+<!-- Department Form Section -->
+<div class="container mt-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-plus-square me-2"></i>Enter Department Details</h5>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("DepartmentAddEdit", "Department", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="row g-3">
+                    <!-- Department Name -->
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.DepartmentName, new { @class = "form-label fw-semibold" })
+                        @Html.TextBoxFor(m => m.DepartmentName, new { @class = "form-control", placeholder = "Enter department name" })
+                        @Html.ValidationMessageFor(m => m.DepartmentName, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- User ID -->
+                    @* <div class="col-md-6">
+                        @Html.LabelFor(m => m.UserID, new { @class = "form-label fw-semibold" })
+                        @Html.TextBoxFor(m => m.UserID, new { @class = "form-control", placeholder = "Enter User ID", type = "number" })
+                        @Html.ValidationMessageFor(m => m.UserID, "", new { @class = "text-danger" })
+                    </div> *@
+
+                    <div class="form-group">
+    <label asp-for="UserID"></label>
+    <select asp-for="UserID" asp-items="@(new SelectList(ViewBag.UserList, "UserID", "UserName"))" class="form-control">
+        <option value="">-- Select User --</option>
+    </select>
+    <span asp-validation-for="UserID" class="text-danger"></span>
+</div>
+
+                    <!-- Description -->
+                    <div class="col-md-12">
+                        @Html.LabelFor(m => m.Description, new { @class = "form-label fw-semibold" })
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 3, placeholder = "Optional description..." })
+                        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Is Active -->
+                    <div class="col-12">
+                        <div class="form-check">
+                            @Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" })
+                            @Html.LabelFor(m => m.IsActive, new { @class = "form-check-label fw-semibold" })
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit and Cancel Buttons -->
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-save2 me-1"></i> Save Department
+                    </button>
+                    <a href="/Department/DepartmentList" class="btn btn-secondary ms-2 px-4">
+                        <i class="bi bi-arrow-left me-1"></i> Cancel
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

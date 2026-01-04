@@ -1,0 +1,108 @@
+﻿@model Hospital_Management_System.Models.EmployeeModel
+
+<div class="container mt-4">
+    <h4 class="fw-bold text-primary">
+        <i class="bi bi-person-plus-fill me-2"></i>@(Model.EmployeeId > 0 ? "Edit Employee" : "Add Employee")
+    </h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light px-3 py-2 rounded shadow-sm">
+            <li class="breadcrumb-item"><a href="/Dashboard" class="text-decoration-none text-dark">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/Employee/EmployeeList" class="text-decoration-none text-dark">Employee List</a></li>
+            <li class="breadcrumb-item active text-primary" aria-current="page">@(Model.EmployeeId > 0 ? "Edit Employee" : "Add Employee")</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="container mt-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-person-lines-fill me-2"></i>Enter Employee Details</h5>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("EmployeeAddEdit", "Employee", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                @if (Model.EmployeeId > 0)
+                {
+                    @Html.HiddenFor(m => m.EmployeeId)
+                }
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.FirstName, htmlAttributes: new { @class = "form-label fw-semibold" })
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "Enter first name", required = "required" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.LastName, htmlAttributes: new { @class = "form-label fw-semibold" })
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Enter last name", required = "required" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.Label("Email", "Email", new { @class = "form-label fw-semibold" })
+                        @Html.TextBox("Email", Model.Email, new { type = "email", @class = "form-control", placeholder = "Enter email" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.PhoneNumber, htmlAttributes: new { @class = "form-label fw-semibold" })
+                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = "Enter phone number" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.DateOfBirth, htmlAttributes: new { @class = "form-label fw-semibold" })
+                        @Html.TextBoxFor(m => m.DateOfBirth, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.Gender, htmlAttributes: new { @class = "form-label fw-semibold" })
+                        @Html.DropDownListFor(m => m.Gender,
+                            new List<SelectListItem> {
+                                new SelectListItem { Text = "-- Select Gender --", Value = "" },
+                                new SelectListItem { Text = "Male", Value = "Male", Selected = (Model.Gender == "Male") },
+                                new SelectListItem { Text = "Female", Value = "Female", Selected = (Model.Gender == "Female") },
+                                new SelectListItem { Text = "Other", Value = "Other", Selected = (Model.Gender == "Other") }
+                            },
+                            new { @class = "form-select" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.HireDate, htmlAttributes: new { @class = "form-label fw-semibold" })
+                        @Html.TextBoxFor(m => m.HireDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", required = "required" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.JobTitle, htmlAttributes: new { @class = "form-label fw-semibold" })
+                        @Html.TextBoxFor(m => m.JobTitle, new { @class = "form-control", placeholder = "Enter job title" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.Department, htmlAttributes: new { @class = "form-label fw-semibold" })
+                        @Html.TextBoxFor(m => m.Department, new { @class = "form-control", placeholder = "Enter department" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.Salary, htmlAttributes: new { @class = "form-label fw-semibold" })
+                        @Html.TextBoxFor(m => m.Salary, new { @class = "form-control", type = "number", step = "0.01", placeholder = "₹ 0.00" })
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-check mt-4">
+                            @Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" })
+                            @Html.LabelFor(m => m.IsActive, htmlAttributes: new { @class = "form-check-label" })
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hidden Fields -->
+                @Html.HiddenFor(m => m.CreatedAt)
+                @Html.HiddenFor(m => m.UpdatedAt)
+
+                <!-- Buttons -->
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-success px-4">
+                        <i class="bi bi-save me-1"></i> Save Employee
+                    </button>
+                    <a href="/Employee/EmployeeList" class="btn btn-secondary ms-2 px-4">
+                        <i class="bi bi-arrow-left me-1"></i> Cancel
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

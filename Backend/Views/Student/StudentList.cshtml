@@ -1,0 +1,637 @@
+﻿@model DataTable
+@using System.Data
+@{
+    ViewData["Title"] = "Student Management";
+}
+
+<link href="~/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --primary-600: #2563eb;
+        --primary-50: #eff6ff;
+        --gray-900: #111827;
+        --gray-800: #1f2937;
+        --gray-700: #374151;
+        --gray-600: #4b5563;
+        --gray-500: #6b7280;
+        --gray-400: #9ca3af;
+        --gray-300: #d1d5db;
+        --gray-200: #e5e7eb;
+        --gray-100: #f3f4f6;
+        --gray-50: #f9fafb;
+        --success-600: #059669;
+        --success-50: #ecfdf5;
+        --warning-600: #d97706;
+        --warning-50: #fffbeb;
+        --red-600: #dc2626;
+        --red-50: #fef2f2;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        background-color: var(--gray-50);
+        color: var(--gray-900);
+        line-height: 1.5;
+        margin: 0;
+        padding: 0;
+    }
+
+    .page-container {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 24px;
+    }
+
+    .page-header {
+        margin-bottom: 32px;
+    }
+
+    .page-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--gray-900);
+        margin: 0 0 8px 0;
+    }
+
+    .page-description {
+        font-size: 14px;
+        color: var(--gray-600);
+        margin: 0;
+    }
+
+    .content-wrapper {
+        background: white;
+        border: 1px solid var(--gray-200);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--gray-200);
+        background: white;
+    }
+
+    .toolbar-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .toolbar-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .search-container {
+        position: relative;
+        width: 320px;
+    }
+
+    .search-input {
+        width: 100%;
+        height: 40px;
+        padding: 0 12px 0 40px;
+        border: 1px solid var(--gray-300);
+        border-radius: 8px;
+        font-size: 14px;
+        background: white;
+        transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: var(--primary-600);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray-400);
+        font-size: 16px;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        height: 40px;
+        padding: 0 16px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    .btn:hover {
+        text-decoration: none;
+    }
+
+    .btn-primary {
+        background: var(--primary-600);
+        color: white;
+        border-color: var(--primary-600);
+    }
+
+    .btn-primary:hover {
+        background: #1d4ed8;
+        border-color: #1d4ed8;
+        color: white;
+    }
+
+    .btn-secondary {
+        background: white;
+        color: var(--gray-700);
+        border-color: var(--gray-300);
+    }
+
+    .btn-secondary:hover {
+        background: var(--gray-50);
+        color: var(--gray-900);
+    }
+
+    .data-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .data-table th {
+        background: var(--gray-50);
+        color: var(--gray-700);
+        font-weight: 500;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 12px 24px;
+        text-align: left;
+        border-bottom: 1px solid var(--gray-200);
+        white-space: nowrap;
+    }
+
+    .data-table td {
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--gray-200);
+        font-size: 14px;
+        color: var(--gray-900);
+        vertical-align: middle;
+    }
+
+    .data-table tbody tr {
+        transition: background-color 0.15s;
+    }
+
+    .data-table tbody tr:hover {
+        background: var(--gray-50);
+    }
+
+    .data-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .student-cell {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: var(--primary-600);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 14px;
+        flex-shrink: 0;
+    }
+
+    .student-info h4 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--gray-900);
+        line-height: 1.2;
+    }
+
+    .student-info p {
+        margin: 2px 0 0 0;
+        font-size: 12px;
+        color: var(--gray-600);
+        line-height: 1.2;
+    }
+
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .badge-success {
+        background: var(--success-50);
+        color: var(--success-600);
+    }
+
+    .badge-gray {
+        background: var(--gray-100);
+        color: var(--gray-600);
+    }
+
+    .actions-cell {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .action-btn {
+        width: 32px;
+        height: 32px;
+        border: none;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.15s;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .action-btn-edit {
+        background: var(--warning-50);
+        color: var(--warning-600);
+    }
+
+    .action-btn-edit:hover {
+        background: #fbbf24;
+        color: white;
+        text-decoration: none;
+    }
+
+    .action-btn-delete {
+        background: var(--red-50);
+        color: var(--red-600);
+    }
+
+    .action-btn-delete:hover {
+        background: #ef4444;
+        color: white;
+        text-decoration: none;
+    }
+
+    .enrollment-number {
+        font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--primary-600);
+        background: var(--primary-50);
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: 1px solid rgba(37, 99, 235, 0.1);
+    }
+
+    .percentage-cell {
+        text-align: center;
+    }
+
+    .percentage-value {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--gray-900);
+        display: block;
+    }
+
+    .percentage-label {
+        font-size: 11px;
+        color: var(--gray-500);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-top: 2px;
+    }
+
+    .contact-info {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        color: var(--gray-700);
+    }
+
+    .contact-icon {
+        color: var(--gray-400);
+        font-size: 12px;
+    }
+
+    .empty-state {
+        padding: 80px 24px;
+        text-align: center;
+    }
+
+    .empty-state-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 16px;
+        background: var(--gray-100);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gray-400);
+        font-size: 24px;
+    }
+
+    .empty-state h3 {
+        margin: 0 0 8px 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--gray-900);
+    }
+
+    .empty-state p {
+        margin: 0 0 24px 0;
+        font-size: 14px;
+        color: var(--gray-600);
+    }
+
+    .gender-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 8px;
+    }
+
+    .gender-male { background: #3b82f6; }
+    .gender-female { background: #ec4899; }
+    .gender-other { background: #8b5cf6; }
+
+    .table-footer {
+        padding: 16px 24px;
+        border-top: 1px solid var(--gray-200);
+        background: var(--gray-50);
+        color: var(--gray-600);
+        font-size: 13px;
+        text-align: center;
+    }
+
+    @@media (max-width: 768px) {
+        .page-container {
+            padding: 16px;
+        }
+
+        .toolbar {
+            flex-direction: column;
+            gap: 16px;
+            align-items: stretch;
+        }
+
+        .toolbar-right {
+            justify-content: stretch;
+        }
+
+        .search-container {
+            width: 100%;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px 16px;
+        }
+
+        .student-cell {
+            gap: 8px;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            font-size: 12px;
+        }
+    }
+</style>
+
+<div class="page-container">
+    <div class="page-header">
+        <h1 class="page-title">Students</h1>
+        <p class="page-description">Manage and organize your student database</p>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <div class="search-container">
+                    <i class="bi bi-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search students..." id="searchInput">
+                </div>
+            </div>
+            <div class="toolbar-right">
+                <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-funnel"></i>
+                    Filter
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#" data-filter="all">All Students</a></li>
+                    <li><a class="dropdown-item" href="#" data-filter="active">Active Only</a></li>
+                    <li><a class="dropdown-item" href="#" data-filter="cricket">Cricket Players</a></li>
+                    <li><a class="dropdown-item" href="#" data-filter="rajkot">Rajkot Residents</a></li>
+                </ul>
+                <a asp-controller="Student" asp-action="StudentAddEdit" class="btn btn-primary">
+                    <i class="bi bi-plus"></i>
+                    Add Student
+                </a>
+            </div>
+        </div>
+
+        @if (Model.Rows.Count > 0)
+        {
+            <table class="data-table" id="studentsTable">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Enrollment</th>
+                        <th>Contact</th>
+                        <th>Gender</th>
+                        <th>Academic</th>
+                        <th>Location</th>
+                        <th>Activities</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DataRow dr in Model.Rows)
+                    {
+                        <tr data-student-id="@dr["StudentID"]">
+                            <td>
+                                <div class="student-cell">
+                                    <div class="avatar">
+                                        @dr["Name"].ToString().Substring(0, 1).ToUpper()
+                                    </div>
+                                    <div class="student-info">
+                                        <h4>@dr["Name"]</h4>
+                                        <p>@dr["Email"]</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="enrollment-number">#@dr["EnrollmentNo"]</span>
+                            </td>
+                            <td>
+                                <div class="contact-info">
+                                    <i class="bi bi-telephone contact-icon"></i>
+                                    @dr["MobileNo"]
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <span class="gender-indicator gender-@dr["Gender"].ToString().ToLower()"></span>
+                                    @dr["Gender"]
+                                </div>
+                            </td>
+                            <td>
+                                <div class="percentage-cell">
+                                    <span class="percentage-value">@dr["Percentage12th"]%</span>
+                                    <div class="percentage-label">12th Grade</div>
+                                </div>
+                            </td>
+                            <td>
+                                @if (Convert.ToBoolean(dr["LiveInRajkot"]))
+                                {
+                                    <span class="badge badge-success">
+                                        <i class="bi bi-geo-alt-fill"></i>
+                                        Rajkot
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-gray">
+                                        <i class="bi bi-geo"></i>
+                                        Other
+                                    </span>
+                                }
+                            </td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    @if (Convert.ToBoolean(dr["PlayingCricket"]))
+                                    {
+                                        <span class="badge badge-success">
+                                            <i class="bi bi-trophy"></i>
+                                            Cricket
+                                        </span>
+                                    }
+                                    @if (Convert.ToBoolean(dr["IsActive"]))
+                                    {
+                                        <span class="badge badge-success">
+                                            <i class="bi bi-check-circle"></i>
+                                            Active
+                                        </span>
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                <div class="actions-cell">
+                                    <a asp-controller="Student" asp-action="StudentAddEdit" asp-route-StudentID="@dr["StudentID"]" 
+                                       class="action-btn action-btn-edit" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a asp-controller="Student" asp-action="StudentDelete" asp-route-StudentID="@dr["StudentID"]" 
+                                       class="action-btn action-btn-delete" title="Delete"
+                                       onclick="return confirm('Delete @dr["Name"]?')">
+                                        <i class="bi bi-trash3"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="table-footer">
+                Showing @Model.Rows.Count students
+            </div>
+        }
+        else
+        {
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="bi bi-people"></i>
+                </div>
+                <h3>No students found</h3>
+                <p>Get started by adding your first student to the system.</p>
+                <a asp-controller="Student" asp-action="StudentAddEdit" class="btn btn-primary">
+                    <i class="bi bi-plus"></i>
+                    Add Student
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Search functionality
+    document.getElementById('searchInput')?.addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const rows = document.querySelectorAll('#studentsTable tbody tr');
+        
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchTerm) ? '' : 'none';
+        });
+    });
+
+    // Filter functionality
+    document.querySelectorAll('[data-filter]').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const filter = this.getAttribute('data-filter');
+            const rows = document.querySelectorAll('#studentsTable tbody tr');
+            
+            rows.forEach(row => {
+                let show = true;
+                const text = row.textContent.toLowerCase();
+                
+                switch(filter) {
+                    case 'active':
+                        show = text.includes('active');
+                        break;
+                    case 'cricket':
+                        show = text.includes('cricket');
+                        break;
+                    case 'rajkot':
+                        show = text.includes('rajkot');
+                        break;
+                }
+                
+                row.style.display = show ? '' : 'none';
+            });
+        });
+    });
+</script>

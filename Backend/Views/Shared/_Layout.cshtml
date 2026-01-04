@@ -1,0 +1,1241 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>HMS</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="-/assets/img/favicon.png" rel="icon">
+    <link href="-/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="~/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="~/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="~/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="~/assets/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <div class="d-flex align-items-center justify-content-between">
+            <a class="logo d-flex align-items-center">
+                <img src="~/assets/img/logo.png" alt="">
+                <span class="d-none d-lg-block">Hospital_Management_System</span>
+            </a>
+        </div><!-- End Logo -->
+
+        
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+
+                <li class="nav-item d-block d-lg-none">
+                    <a class="nav-link nav-icon search-bar-toggle " href="#">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </li><!-- End Search Icon-->
+
+
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <img src="" alt="Profile" class="rounded-circle">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">Jeet Bhalodi</span>
+                    </a><!-- End Profile Iamge Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h6>Jeet Bhalodi</h6>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" asp-controller="Account" asp-action="Logout">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Sign Out</span>
+                            </a>
+                        </li>
+
+
+                    </ul><!-- End Profile Dropdown Items -->
+                </li><!-- End Profile Nav -->
+
+            </ul>
+        </nav><!-- End Icons Navigation -->
+
+    </header><!-- End Header -->
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <!-- Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Dashboard" asp-action="Index">
+                    <i class="bi bi-grid"></i>
+                    <span>HOME</span>
+                </a>
+            </li>
+
+            <!-- Section: User Management -->
+            <li class="nav-heading">User Management</li>
+
+            <!-- User -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#user-nav" data-bs-toggle="collapse">
+                    <i class="bi bi-person"></i><span>User</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="user-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a asp-controller="User" asp-action="UserList"><i class="bi bi-circle"></i><span>User List</span></a></li>
+                    <li><a asp-controller="User" asp-action="UserAddEdit"><i class="bi bi-circle"></i><span>User Add</span></a></li>
+                </ul>
+            </li>
+
+            <!-- Section: Doctors -->
+            <li class="nav-heading">Doctors</li>
+
+            <!-- Doctor -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#doctor-nav" data-bs-toggle="collapse">
+                    <i class="bi bi-person-badge"></i><span>Doctor</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="doctor-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a asp-controller="Doctor" asp-action="DoctorList"><i class="bi bi-circle"></i><span>Doctor List</span></a></li>
+                    <li><a asp-controller="Doctor" asp-action="DoctorAddEdit"><i class="bi bi-circle"></i><span>Doctor Add</span></a></li>
+                </ul>
+            </li>
+
+            <!-- Section: Departments -->
+            <li class="nav-heading">Departments</li>
+
+            <!-- Department -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#department-nav" data-bs-toggle="collapse">
+                    <i class="bi bi-building"></i><span>Department</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="department-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a asp-controller="Department" asp-action="DepartmentList"><i class="bi bi-circle"></i><span>Department List</span></a></li>
+                    <li><a asp-controller="Department" asp-action="DepartmentAddEdit"><i class="bi bi-circle"></i><span>Department Add</span></a></li>
+                </ul>
+            </li>
+
+            <!-- Section: Assignments -->
+            <li class="nav-heading">Assignments</li>
+
+            <!-- Doctor Department -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#docdept-nav" data-bs-toggle="collapse">
+                    <i class="bi bi-diagram-3"></i><span>Doctor Department</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="docdept-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a asp-controller="DoctorDepartment" asp-action="DoctorDepartmentList"><i class="bi bi-circle"></i><span>Doctor Department List</span></a></li>
+                    <li><a asp-controller="DoctorDepartment" asp-action="DoctorDepartmentAddEdit"><i class="bi bi-circle"></i><span>Doctor Department Add</span></a></li>
+                </ul>
+            </li>
+
+            <!-- Section: Patients -->
+            <li class="nav-heading">Patients</li>
+
+            <!-- Patient -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#patient-nav" data-bs-toggle="collapse">
+                    <i class="bi bi-people"></i><span>Patient</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="patient-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a asp-controller="Patient" asp-action="PatientList"><i class="bi bi-circle"></i><span>Patient List</span></a></li>
+                    <li><a asp-controller="Patient" asp-action="PatientAddEdit"><i class="bi bi-circle"></i><span>Patient Add</span></a></li>
+                </ul>
+            </li>
+
+            <!-- Section: Appointments -->
+            <li class="nav-heading">Appointment</li>
+
+            <!-- Appointment -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#appointment-nav" data-bs-toggle="collapse">
+                    <i class="bi bi-calendar-check"></i><span>Appointment</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="appointment-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a asp-controller="Appointment" asp-action="AppointmentList"><i class="bi bi-circle"></i><span>Appointment List</span></a></li>
+                    <li><a asp-controller="Appointment" asp-action="AppointmentAddEdit"><i class="bi bi-circle"></i><span>Appointment Add</span></a></li>
+                </ul>
+            </li>
+
+            <!-- Section: student -->
+            <li class="nav-heading">Appointment</li>
+
+            <!-- Appointment -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#student-nav" data-bs-toggle="collapse">
+                    <i class="bi bi-calendar-check"></i><span>Student</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="student-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a asp-controller="Student" asp-action="StudentList"><i class="bi bi-circle"></i><span>Student List</span></a></li>
+                    <li><a asp-controller="Student" asp-action="StudentAddEdit"><i class="bi bi-circle"></i><span>Student Add</span></a></li>
+                </ul>
+            </li>
+
+            <!-- Section: Image -->
+            <li class="nav-heading">Upload Image</li>
+
+            <!-- Image -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#Image-nav" data-bs-toggle="collapse">
+                    <i class="bi bi-calendar-check"></i><span>Upload Image</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="Image-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a asp-controller="Image" asp-action="ImageAddEdit"><i class="bi bi-circle"></i><span>Image Add/List</span></a></li>
+                </ul>
+            </li>
+
+            @* <!-- Section: Employees -->
+            <li class="nav-heading">Employees</li>
+
+            <!-- Employee -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#employee-nav" data-bs-toggle="collapse">
+                    <i class="bi bi-person-vcard"></i><span>Employee</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="employee-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a asp-controller="Employee" asp-action="EmployeeList"><i class="bi bi-circle"></i><span>Employee List</span></a></li>
+                    <li><a asp-controller="Employee" asp-action="EmployeeAddEdit"><i class="bi bi-circle"></i><span>Employee Add</span></a></li>
+                </ul>
+            </li>  *@
+
+
+        </ul>
+
+    </aside><!-- End Sidebar -->
+
+    <main id="main" class="main">
+        @RenderSection("Scripts", required: false)
+
+        @RenderBody();
+
+    </main>
+    <!-- End #main -->
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+        <div class="copyright">
+            &copy; Copyright <strong><span>HMS</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+            <!-- All the links in the footer should remain intact. -->
+            <!-- You can delete the links only if you purchased the pro version. -->
+            <!-- Licensing information: https://bootstrapmade.com/license/ -->
+            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+            Designed by <a href="https://www.instagram.com/jeettt_2311__?igsh=MWc3cW45ZnI1b3F5bA%3D%3D&utm_source=qr">prince boda</a>
+        </div>
+    </footer><!-- End Footer -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+        <i class="bi bi-arrow-up-short"></i>
+    </a>
+
+    <!-- Vendor JS Files -->
+    <script src="~/assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/vendor/chart.js/chart.umd.js"></script>
+    <script src="~/assets/vendor/echarts/echarts.min.js"></script>
+    <script src="~/assets/vendor/quill/quill.js"></script>
+    <script src="~/assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="~/assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="~/assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="-/assets/js/main.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+@* Light Mode  *@
+@* <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>HealthCare Elite - Advanced Medical Management</title>
+    <meta content="Next-generation Hospital Management System with AI-powered healthcare solutions" name="description">
+    <meta content="hospital, healthcare, AI, medical, futuristic, elite" name="keywords">
+
+    <!-- Favicons -->
+    <link href="~/assets/img/favicon.png" rel="icon">
+    <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Ultra-Modern Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="~/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="~/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="~/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="~/assets/css/style.css" rel="stylesheet">
+
+    <!-- Ultra-Fancy Light Mode Styles -->
+    <style>
+        :root {
+            /* Light Mode Color Palette */
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --warning-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --danger-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --light-gradient: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --neon-blue: #3b82f6;
+            --neon-purple: #8b5cf6;
+            --neon-pink: #ec4899;
+            --neon-green: #10b981;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --shadow-colored: 0 10px 25px rgba(59, 130, 246, 0.15);
+            --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --accent-light: #e0e7ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #ecfdf5 100%);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+            /* Animated Background Particles - Light Mode */
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%233b82f6" opacity="0.1"><animate attributeName="opacity" values="0.1;0.4;0.1" dur="3s" repeatCount="indefinite"/></circle></svg>') repeat;
+                animation: float 20s infinite linear;
+                pointer-events: none;
+                z-index: -1;
+            }
+
+        @@keyframes float {
+            0%
+
+        {
+            transform: translateY(0px);
+        }
+
+        100% {
+            transform: translateY(-100px);
+        }
+
+        }
+
+        /* Ultra-Modern Header - Light Mode */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-light);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+            .header::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 3px;
+                background: var(--primary-gradient);
+                animation: shimmer 2s infinite;
+            }
+
+        @@keyframes shimmer {
+            0%
+
+        {
+            opacity: 0.7;
+        }
+
+        50% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0.7;
+        }
+
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            background: var(--primary-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+            .logo:hover {
+                transform: scale(1.05);
+                filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.3));
+            }
+
+            .logo img {
+                height: 45px;
+                margin-right: 15px;
+                filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));
+                animation: pulse 2s infinite;
+            }
+
+        @@keyframes pulse {
+            0%
+
+        {
+            filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.3));
+        }
+
+        50% {
+            filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.5));
+        }
+
+        100% {
+            filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.3));
+        }
+
+        }
+
+        /* Futuristic Sidebar - Light Mode */
+        .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-light);
+            width: 280px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            z-index: 999;
+            overflow-y: auto;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+            .sidebar::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 3px;
+                height: 100%;
+                background: var(--primary-gradient);
+                animation: slideDown 3s infinite;
+            }
+
+        @@keyframes slideDown {
+            0%
+
+        {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+        50% {
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+
+        }
+
+        .sidebar-nav {
+            padding: 100px 0 2rem;
+            margin: 0;
+        }
+
+        .nav-heading {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--neon-blue);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 2rem 1.5rem 0.5rem;
+            margin: 0;
+            position: relative;
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+
+            .nav-heading::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 1.5rem;
+                right: 1.5rem;
+                height: 2px;
+                background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+                animation: glow 2s infinite alternate;
+            }
+
+        @@keyframes glow {
+            from
+
+        {
+            box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+        }
+
+        to {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5), 0 0 25px rgba(59, 130, 246, 0.3);
+        }
+
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-secondary);
+            padding: 1rem 1.5rem;
+            margin: 0.25rem 1rem;
+            border-radius: 15px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid transparent;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+            .nav-link::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: var(--primary-gradient);
+                transition: left 0.4s ease;
+                z-index: -1;
+            }
+
+            .nav-link:hover {
+                color: white;
+                transform: translateX(10px);
+                border: 1px solid rgba(59, 130, 246, 0.3);
+                box-shadow: var(--shadow-colored);
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            }
+
+                .nav-link:hover::before {
+                    left: 0;
+                }
+
+            .nav-link i {
+                font-size: 1.2rem;
+                margin-right: 1rem;
+                width: 25px;
+                text-align: center;
+                transition: all 0.3s ease;
+            }
+
+            .nav-link:hover i {
+                transform: rotate(360deg) scale(1.2);
+                color: var(--neon-green);
+                filter: drop-shadow(0 0 5px currentColor);
+            }
+
+        .nav-content {
+            background: rgba(248, 250, 252, 0.8);
+            border-radius: 12px;
+            margin: 0.5rem 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+            .nav-content a {
+                padding: 0.7rem 1rem 0.7rem 3.5rem;
+                font-size: 0.9rem;
+                color: var(--text-secondary);
+                border-radius: 8px;
+                transition: all 0.3s ease;
+                position: relative;
+            }
+
+                .nav-content a::before {
+                    content: '';
+                    position: absolute;
+                    left: 2.5rem;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 50%;
+                    background: var(--neon-pink);
+                    transition: all 0.3s ease;
+                    opacity: 0.5;
+                }
+
+                .nav-content a:hover {
+                    background: var(--success-gradient);
+                    color: white;
+                    transform: translateX(8px);
+                    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+                }
+
+                    .nav-content a:hover::before {
+                        transform: translateY(-50%) scale(1.5);
+                        opacity: 1;
+                        box-shadow: 0 0 10px var(--neon-pink);
+                    }
+
+        /* Profile Dropdown Magic - Light Mode */
+        .nav-profile img {
+            width: 42px;
+            height: 42px;
+            border: 3px solid transparent;
+            background: var(--primary-gradient);
+            padding: 2px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            animation: rotate 10s linear infinite;
+        }
+
+        @@keyframes rotate {
+            from
+
+        {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+
+        }
+
+        .nav-profile:hover img {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-colored);
+        }
+
+        .dropdown-menu {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--shadow-light);
+            padding: 1rem 0;
+            margin-top: 10px;
+        }
+
+        .dropdown-item {
+            padding: 1rem 1.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .dropdown-item::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: var(--secondary-gradient);
+                transition: left 0.3s ease;
+                z-index: -1;
+            }
+
+            .dropdown-item:hover {
+                color: white;
+                transform: translateX(5px);
+                text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+            }
+
+                .dropdown-item:hover::before {
+                    left: 0;
+                }
+
+        /* Main Content Area - Light Mode */
+        .main {
+            margin-left: 280px;
+            padding: 120px 2rem 2rem;
+            min-height: 100vh;
+            background: transparent;
+            position: relative;
+        }
+
+            .main::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.05) 0%, transparent 50%), radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+                pointer-events: none;
+                z-index: -1;
+            }
+
+        /* Futuristic Footer - Light Mode */
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-border);
+            padding: 2rem;
+            margin-left: 280px;
+            text-align: center;
+            color: var(--text-secondary);
+            position: relative;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+            .footer::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 3px;
+                background: var(--secondary-gradient);
+                animation: pulse-line 3s infinite;
+            }
+
+        @@keyframes pulse-line {
+            0%, 100%
+
+        {
+            opacity: 0.5;
+        }
+
+        50% {
+            opacity: 1;
+        }
+
+        }
+
+        .footer .copyright {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .footer .credits a {
+            color: var(--neon-purple);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(139, 92, 246, 0.3);
+        }
+
+            .footer .credits a:hover {
+                color: var(--neon-pink);
+                text-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+                transform: scale(1.05);
+            }
+
+        /* Ultra-Fancy Back to Top - Light Mode */
+        .back-to-top {
+            background: var(--primary-gradient);
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            box-shadow: var(--shadow-colored);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+            .back-to-top:hover {
+                transform: translateY(-10px) rotate(360deg) scale(1.1);
+                box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
+                background: var(--secondary-gradient);
+            }
+
+            .back-to-top i {
+                font-size: 1.5rem;
+                animation: bounce 2s infinite;
+            }
+
+        @@keyframes bounce {
+            0%, 20%, 50%, 80%, 100%
+
+        {
+            transform: translateY(0);
+        }
+
+        40% {
+            transform: translateY(-10px);
+        }
+
+        60% {
+            transform: translateY(-5px);
+        }
+
+        }
+
+        /* Mobile Responsive Magic */
+        @@media (max-width: 768px) {
+            .sidebar
+
+        {
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .sidebar.show {
+            transform: translateX(0);
+        }
+
+        .main, .footer {
+            margin-left: 0;
+        }
+
+        .header {
+            padding: 1rem;
+        }
+
+        .logo span {
+            display: none;
+        }
+
+        }
+
+        /* Custom Scrollbar - Light Mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(248, 250, 252, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-gradient);
+            border-radius: 10px;
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: var(--secondary-gradient);
+            }
+
+        /* Loading Animation */
+        @@keyframes fadeInUp {
+            from
+
+        {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        }
+
+        .nav-item {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+            .nav-item:nth-child(1) {
+                animation-delay: 0.1s;
+            }
+
+            .nav-item:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+
+            .nav-item:nth-child(3) {
+                animation-delay: 0.3s;
+            }
+
+            .nav-item:nth-child(4) {
+                animation-delay: 0.4s;
+            }
+
+            .nav-item:nth-child(5) {
+                animation-delay: 0.5s;
+            }
+
+            .nav-item:nth-child(6) {
+                animation-delay: 0.6s;
+            }
+
+            .nav-item:nth-child(7) {
+                animation-delay: 0.7s;
+            }
+
+            .nav-item:nth-child(8) {
+                animation-delay: 0.8s;
+            }
+
+            .nav-item:nth-child(9) {
+                animation-delay: 0.9s;
+            }
+
+            .nav-item:nth-child(10) {
+                animation-delay: 1.0s;
+            }
+
+        /* Holographic Effect - Light Mode */
+        .holographic {
+            background: linear-gradient(45deg, transparent 30%, rgba(59, 130, 246, 0.1) 50%, transparent 70%);
+            background-size: 200% 200%;
+            animation: hologram 3s infinite;
+        }
+
+        @@keyframes hologram {
+            0%
+
+        {
+            background-position: 0% 0%;
+        }
+
+        50% {
+            background-position: 100% 100%;
+        }
+
+        100% {
+            background-position: 0% 0%;
+        }
+
+        }
+
+        /* Enhanced card effects for light mode */
+        .card-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 20px;
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+
+            .card-effect:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--shadow-colored);
+            }
+    </style>
+</head>
+
+<body>
+    <!-- ======= Ultra-Modern Header - Light Mode ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+        <div class="d-flex align-items-center justify-content-between">
+            <a class="logo d-flex align-items-center holographic">
+                <img src="~/assets/img/logo.png" alt="HealthCare Elite Logo">
+                <span class="d-none d-lg-block">HealthCare Elite</span>
+            </a>
+        </div>
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+                <li class="nav-item d-block d-lg-none">
+                    <a class="nav-link nav-icon search-bar-toggle" href="#" style="color: var(--neon-blue);">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </li>
+
+                <li class="nav-item dropdown pe-3">
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <img src="~/assets/img/my.png" alt="Profile" class="rounded-circle">
+                        <span class="d-none d-md-block dropdown-toggle ps-2" style="color: var(--text-primary); font-weight: 600;">Dr. Jeet Bhalodi</span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header" style="border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem;">
+                            <h6 style="color: var(--text-primary); margin: 0; font-weight: 600;">Dr. Jeet Bhalodi</h6>
+                            <span style="color: var(--neon-blue); font-size: 0.8rem;">System Administrator</span>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <i class="bi bi-person-circle me-2" style="color: var(--neon-green);"></i>
+                                <span>My Profile</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <i class="bi bi-gear-fill me-2" style="color: var(--neon-purple);"></i>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" asp-controller="Account" asp-action="Logout">
+                                <i class="bi bi-power me-2" style="color: var(--neon-pink);"></i>
+                                <span>Sign Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ======= Futuristic Sidebar - Light Mode ======= -->
+    <aside id="sidebar" class="sidebar">
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <!-- Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Dashboard" asp-action="Index">
+                    <i class="bi bi-grid-3x3-gap-fill"></i>
+                    <span>Command Center</span>
+                </a>
+            </li>
+
+            <!-- User Management -->
+            <li class="nav-heading">👥 User Management</li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#user-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-people-fill"></i><span>System Users</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="user-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a asp-controller="User" asp-action="UserList"><i class="bi bi-circle-fill"></i><span>All Users</span></a></li>
+                    <li><a asp-controller="User" asp-action="UserAddEdit"><i class="bi bi-circle-fill"></i><span>Add New User</span></a></li>
+                </ul>
+            </li>
+
+            <!-- Medical Staff -->
+            <li class="nav-heading">🏥 Medical Staff</li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#doctor-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-heart-pulse-fill"></i><span>Medical Doctors</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="doctor-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a asp-controller="Doctor" asp-action="DoctorList"><i class="bi bi-circle-fill"></i><span>Doctor Registry</span></a></li>
+                    <li><a asp-controller="Doctor" asp-action="DoctorAddEdit"><i class="bi bi-circle-fill"></i><span>Register Doctor</span></a></li>
+                </ul>
+            </li>
+
+            <!-- Departments -->
+            <li class="nav-heading">🏢 Hospital Structure</li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#department-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-hospital-fill"></i><span>Departments</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="department-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a asp-controller="Department" asp-action="DepartmentList"><i class="bi bi-circle-fill"></i><span>All Departments</span></a></li>
+                    <li><a asp-controller="Department" asp-action="DepartmentAddEdit"><i class="bi bi-circle-fill"></i><span>Create Department</span></a></li>
+                </ul>
+            </li>
+
+            <!-- Assignments -->
+            <li class="nav-heading">🔗 Staff Assignments</li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#docdept-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-diagram-3-fill"></i><span>Doctor Assignments</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="docdept-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a asp-controller="DoctorDepartment" asp-action="DoctorDepartmentList"><i class="bi bi-circle-fill"></i><span>View Assignments</span></a></li>
+                    <li><a asp-controller="DoctorDepartment" asp-action="DoctorDepartmentAddEdit"><i class="bi bi-circle-fill"></i><span>New Assignment</span></a></li>
+                </ul>
+            </li>
+
+            <!-- Patient Care -->
+            <li class="nav-heading">❤️ Patient Care</li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#patient-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-person-hearts"></i><span>Patient Records</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="patient-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a asp-controller="Patient" asp-action="PatientList"><i class="bi bi-circle-fill"></i><span>Patient Database</span></a></li>
+                    <li><a asp-controller="Patient" asp-action="PatientAddEdit"><i class="bi bi-circle-fill"></i><span>Register Patient</span></a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#appointment-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-calendar2-check-fill"></i><span>Appointments</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="appointment-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a asp-controller="Appointment" asp-action="AppointmentList"><i class="bi bi-circle-fill"></i><span>Schedule Overview</span></a></li>
+                    <li><a asp-controller="Appointment" asp-action="AppointmentAddEdit"><i class="bi bi-circle-fill"></i><span>Book Appointment</span></a></li>
+                </ul>
+            </li>
+
+            <!-- Administration -->
+            <li class="nav-heading">⚙️ Administration</li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#employee-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-person-badge-fill"></i><span>Staff Management</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="employee-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a asp-controller="Employee" asp-action="EmployeeList"><i class="bi bi-circle-fill"></i><span>Employee Directory</span></a></li>
+                    <li><a asp-controller="Employee" asp-action="EmployeeAddEdit"><i class="bi bi-circle-fill"></i><span>Add Employee</span></a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </aside>
+
+    <main id="main" class="main">
+        @RenderBody()
+    </main>
+
+    <!-- ======= Futuristic Footer - Light Mode ======= -->
+    <footer id="footer" class="footer">
+        <div class="copyright">
+            &copy; 2024 <strong><span style="color: var(--neon-blue);">HealthCare Elite</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+            Crafted with ❤️ by <a href="https://www.instagram.com/jeettt_2311__?igsh=MWc3cW45ZnI1b3F5bA%3D%3D&utm_source=qr">Jeet Bhalodi</a>
+        </div>
+    </footer>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+        <i class="bi bi-rocket-takeoff-fill"></i>
+    </a>
+
+    <!-- Vendor JS Files -->
+    <script src="~/assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/vendor/chart.js/chart.umd.js"></script>
+    <script src="~/assets/vendor/echarts/echarts.min.js"></script>
+    <script src="~/assets/vendor/quill/quill.js"></script>
+    <script src="~/assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="~/assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="~/assets/vendor/php-email-form/validate.js"></script>
+    <script src="~/assets/js/main.js"></script>
+
+    <!-- Ultra-Fancy JavaScript Effects - Light Mode -->
+    <script>
+        // Particle effect on mouse move - Light Mode
+        document.addEventListener('mousemove', (e) => {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: fixed;
+                pointer-events: none;
+                left: ${e.clientX}px;
+                top: ${e.clientY}px;
+                width: 6px;
+                height: 6px;
+                background: var(--neon-blue);
+                border-radius: 50%;
+                opacity: 0.6;
+                transform: scale(0);
+                animation: particleExplosion 0.6s ease-out forwards;
+                z-index: 9999;
+            `;
+            document.body.appendChild(particle);
+
+            setTimeout(() => particle.remove(), 600);
+        });
+
+        // Add particle explosion animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @@keyframes particleExplosion {
+                0% { transform: scale(0); opacity: 0.6; }
+                100% { transform: scale(4); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Mobile sidebar toggle
+        const sidebarToggle = document.querySelector('.search-bar-toggle');
+        const sidebar = document.querySelector('.sidebar');
+
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('show');
+            });
+        }
+
+        // Add typing effect to logo
+        const logoText = document.querySelector('.logo span');
+        if (logoText) {
+            const text = logoText.textContent;
+            logoText.textContent = '';
+            let i = 0;
+
+            const typeWriter = () => {
+                if (i < text.length) {
+                    logoText.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
+            };
+
+            setTimeout(typeWriter, 1000);
+        }
+    </script>
+</body>
+
+</html> *@

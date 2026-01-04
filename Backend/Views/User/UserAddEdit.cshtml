@@ -1,0 +1,570 @@
+﻿@model Hospital_Management_System.Models.UserModel
+
+<div class="container mt-4">
+    <h4 class="fw-bold text-primary"><i class="bi bi-person-plus-fill me-2"></i>User Add/Edit</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light px-3 py-2 rounded shadow-sm">
+            <li class="breadcrumb-item"><a href="/Dashboard/Index" class="text-decoration-none text-dark">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/User/UserList" class="text-decoration-none text-dark">User List</a></li>
+            <li class="breadcrumb-item active text-primary" aria-current="page">User Add/Edit</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="container mt-4">
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+    else if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <div class="card shadow border-0">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Enter User Details</h5>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-controller="User" asp-action="UserAddEdit">
+                <input asp-for="UserID" type="hidden" />
+
+                <!-- Validation Summary -->
+                @* <div asp-validation-summary="All" class="text-danger mb-3"></div> *@
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="UserName" class="form-label fw-semibold"></label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Password" class="form-label fw-semibold"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Email" class="form-label fw-semibold"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="MobileNo" class="form-label fw-semibold"></label>
+                        <input asp-for="MobileNo" class="form-control" />
+                        <span asp-validation-for="MobileNo" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <div class="form-check">
+                            <input asp-for="IsActive" class="form-check-input" />
+                            <label class="form-check-label" asp-for="IsActive"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-save2 me-1"></i> Save User
+                    </button>
+                    <a href="/User/UserList" class="btn btn-secondary ms-2 px-4">
+                        <i class="bi bi-arrow-left me-1"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Required for client-side validation -->
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+@* @model Hospital_Management_System.Models.UserModel
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --primary-50: #eff6ff;
+        --primary-100: #dbeafe;
+        --primary-200: #bfdbfe;
+        --primary-300: #93c5fd;
+        --primary-400: #60a5fa;
+        --primary-500: #3b82f6;
+        --primary-600: #2563eb;
+        --primary-700: #1d4ed8;
+        --primary-800: #1e40af;
+        --primary-900: #1e3a8a;
+        --success-color: #059669;
+        --danger-color: #dc2626;
+        --warning-color: #d97706;
+        --gray-50: #f8fafc;
+        --gray-100: #f1f5f9;
+        --gray-200: #e2e8f0;
+        --gray-300: #cbd5e1;
+        --gray-600: #475569;
+        --gray-700: #334155;
+        --gray-800: #1e293b;
+        --white: #ffffff;
+        --shadow-sm: 0 1px 2px 0 rgba(59, 130, 246, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(59, 130, 246, 0.1), 0 2px 4px -1px rgba(59, 130, 246, 0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(59, 130, 246, 0.1), 0 4px 6px -2px rgba(59, 130, 246, 0.05);
+        --shadow-xl: 0 20px 25px -5px rgba(59, 130, 246, 0.1), 0 10px 10px -5px rgba(59, 130, 246, 0.04);
+    }
+
+    * {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, var(--primary-50) 0%, var(--primary-100) 100%);
+        color: var(--gray-800);
+        min-height: 100vh;
+    }
+
+    .main-container {
+        background: var(--white);
+        border-radius: 16px;
+        box-shadow: var(--shadow-xl);
+        margin: 2rem auto;
+        max-width: 90%;
+        border: 1px solid var(--primary-200);
+        overflow: hidden;
+    }
+
+    .header-section {
+        background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-700) 100%);
+        padding: 2rem 2.5rem 1.5rem;
+        color: var(--white);
+    }
+
+    .page-title {
+        color: var(--white);
+        font-weight: 600;
+        font-size: 1.875rem;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .title-icon {
+        background: rgba(255, 255, 255, 0.2);
+        color: var(--white);
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        backdrop-filter: blur(10px);
+    }
+
+    .breadcrumb-modern {
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        padding: 0.75rem 1.25rem;
+        margin-top: 1rem;
+        backdrop-filter: blur(10px);
+    }
+
+        .breadcrumb-modern .breadcrumb {
+            margin: 0;
+            background: none;
+            padding: 0;
+        }
+
+        .breadcrumb-modern .breadcrumb-item + .breadcrumb-item::before {
+            content: "›";
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        .breadcrumb-modern a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+            .breadcrumb-modern a:hover {
+                color: var(--white);
+            }
+
+        .breadcrumb-modern .active {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+    .form-container {
+        padding: 2rem 2.5rem;
+        background: var(--white);
+    }
+
+    .form-card {
+        background: var(--white);
+        border-radius: 16px;
+        border: 1px solid var(--primary-200);
+        box-shadow: var(--shadow-lg);
+        overflow: hidden;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-700) 100%);
+        padding: 1.5rem 2rem;
+        color: var(--white);
+        border-bottom: none;
+    }
+
+        .form-header h5 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+    .form-body {
+        padding: 2rem;
+        background: var(--primary-50);
+    }
+
+    .form-label {
+        color: var(--gray-700);
+        font-weight: 600;
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-control-modern {
+        border: 2px solid var(--primary-200);
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        background: var(--white);
+        font-weight: 400;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow-sm);
+    }
+
+        .form-control-modern:focus {
+            outline: none;
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px var(--primary-100);
+            transform: translateY(-1px);
+            background: var(--white);
+        }
+
+        .form-control-modern:hover {
+            border-color: var(--primary-300);
+        }
+
+    .checkbox-container {
+        background: var(--white);
+        border: 2px solid var(--primary-200);
+        border-radius: 10px;
+        padding: 1rem;
+        margin-top: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+        .checkbox-container:hover {
+            border-color: var(--primary-300);
+            box-shadow: var(--shadow-sm);
+        }
+
+    .checkbox-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .checkbox-modern {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--primary-400);
+        border-radius: 4px;
+        background: var(--white);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        .checkbox-modern:checked {
+            background: var(--primary-600);
+            border-color: var(--primary-600);
+        }
+
+    .checkbox-label {
+        color: var(--gray-700);
+        font-weight: 500;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .btn-modern {
+        border-radius: 10px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        font-size: 0.875rem;
+        transition: all 0.3s ease;
+        border: 1px solid;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        box-shadow: var(--shadow-sm);
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+    }
+
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+    .btn-primary-modern {
+        background: var(--primary-600);
+        color: var(--white);
+        border-color: var(--primary-600);
+    }
+
+        .btn-primary-modern:hover {
+            background: var(--primary-700);
+            border-color: var(--primary-700);
+            color: var(--white);
+        }
+
+    .btn-secondary-modern {
+        background: var(--gray-600);
+        color: var(--white);
+        border-color: var(--gray-600);
+    }
+
+        .btn-secondary-modern:hover {
+            background: var(--gray-700);
+            border-color: var(--gray-700);
+            color: var(--white);
+        }
+
+    .alert-modern {
+        border-radius: 10px;
+        padding: 1rem 1.5rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid;
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .alert-success-modern {
+        background: rgba(5, 150, 105, 0.05);
+        color: #065f46;
+        border-color: rgba(5, 150, 105, 0.2);
+        border-left: 4px solid var(--success-color);
+    }
+
+    .alert-danger-modern {
+        background: rgba(220, 38, 38, 0.05);
+        color: #991b1b;
+        border-color: rgba(220, 38, 38, 0.2);
+        border-left: 4px solid var(--danger-color);
+    }
+
+    .input-group-modern {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+
+    .input-icon {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--primary-400);
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .form-actions {
+        background: var(--white);
+        padding: 1.5rem 2rem;
+        border-top: 1px solid var(--primary-100);
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+    }
+
+    }
+</style>
+
+<div class="main-container">
+    <!-- Header Section -->
+    <div class="header-section">
+        <div class="page-title">
+            <div class="title-icon">
+                <i class="bi bi-person-plus-fill"></i>
+            </div>
+            User Add/Edit
+        </div>
+
+        <nav class="breadcrumb-modern">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/Dashboard/Index">
+                        <i class="bi bi-house-door me-1"></i>Dashboard
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/User/UserList">User List</a>
+                </li>
+                <li class="breadcrumb-item active">User Add/Edit</li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Form Container -->
+    <div class="form-container">
+        <!-- Alert Messages -->
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert-modern alert-danger-modern">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <span><strong>Error:</strong> @TempData["ErrorMessage"]</span>
+            </div>
+        }
+        else if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert-modern alert-success-modern">
+                <i class="bi bi-check-circle-fill"></i>
+                <span><strong>Success:</strong> @TempData["SuccessMessage"]</span>
+            </div>
+        }
+
+        <!-- Form Card -->
+        <div class="form-card">
+            <div class="form-header">
+                <h5>
+                    <i class="bi bi-pencil-square"></i>
+                    Enter User Details
+                </h5>
+            </div>
+
+            <form method="post" asp-controller="User" asp-action="UserAddEdit">
+                <div class="form-body">
+                    <input asp-for="UserID" type="hidden" />
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="input-group-modern">
+                                <label asp-for="UserName" class="form-label">
+                                    <i class="bi bi-person"></i>
+                                    Username
+                                </label>
+                                <input asp-for="UserName" type="text" name="UserName" class="form-control form-control-modern" placeholder="Enter username" />
+                                <i class="bi bi-person-fill input-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="input-group-modern">
+                                <label asp-for="Password" class="form-label">
+                                    <i class="bi bi-shield-lock"></i>
+                                    Password
+                                </label>
+                                <input asp-for="Password" type="password" name="Password" class="form-control form-control-modern" placeholder="Enter password" />
+                                <i class="bi bi-lock-fill input-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="input-group-modern">
+                                <label asp-for="Email" class="form-label">
+                                    <i class="bi bi-envelope"></i>
+                                    Email Address
+                                </label>
+                                <input asp-for="Email" type="email" name="Email" class="form-control form-control-modern" placeholder="Enter email address" />
+                                <i class="bi bi-envelope-fill input-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="input-group-modern">
+                                <label asp-for="MobileNo" class="form-label">
+                                    <i class="bi bi-phone"></i>
+                                    Mobile Number
+                                </label>
+                                <input asp-for="MobileNo" type="text" name="MobileNo" class="form-control form-control-modern" placeholder="Enter mobile number" />
+                                <i class="bi bi-phone-fill input-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">
+                                <i class="bi bi-toggle-on"></i>
+                                User Status
+                            </label>
+                            <div class="checkbox-container">
+                                <div class="checkbox-wrapper">
+                                    <input asp-for="IsActive" type="checkbox" class="checkbox-modern" id="isActiveCheck" />
+                                    <label for="isActiveCheck" class="checkbox-label">
+                                        <i class="bi bi-check-circle me-1"></i>
+                                        Is Active - User can login and access the system
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <a href="/User/UserList" class="btn-modern btn-secondary-modern">
+                        <i class="bi bi-arrow-left"></i>
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn-modern btn-primary-modern">
+                        <i class="bi bi-save2"></i>
+                        Save User
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Add entrance animations
+    window.addEventListener('load', function() {
+        const formCard = document.querySelector('.form-card');
+        formCard.style.opacity = '0';
+        formCard.style.transform = 'translateY(20px)';
+
+        setTimeout(() => {
+            formCard.style.transition = 'all 0.6s ease';
+            formCard.style.opacity = '1';
+            formCard.style.transform = 'translateY(0)';
+        }, 100);
+    });
+
+    // Enhanced form interactions
+    const inputs = document.querySelectorAll('.form-control-modern');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.style.transform = 'scale(1.02)';
+        });
+
+        input.addEventListener('blur', function() {
+            this.parentElement.style.transform = 'scale(1)';
+        });
+    });
+</script> *@

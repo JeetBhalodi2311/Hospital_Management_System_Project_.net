@@ -1,0 +1,603 @@
+﻿@model Hospital_Management_System.Models.StudentModel
+@{
+    ViewData["Title"] = Model.StudentID > 0 ? "Edit Student" : "Add Student";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <!-- Bootstrap 5.3 and Professional Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --success-color: #059669;
+            --danger-color: #dc2626;
+            --warning-color: #d97706;
+            --secondary-color: #64748b;
+            --light-bg: #f8fafc;
+            --border-color: #e2e8f0;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: var(--text-primary);
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .form-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" fill-opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .form-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-header .subtitle {
+            margin-top: 0.5rem;
+            opacity: 0.9;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-body {
+            padding: 2.5rem;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            color: var(--primary-color);
+            font-size: 1.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-control, .form-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background-color: white;
+            color: var(--text-primary);
+        }
+
+        .form-control:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-control:hover, .form-select:hover {
+            border-color: var(--secondary-color);
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary-color);
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .form-control.has-icon {
+            padding-left: 2.5rem;
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--light-bg);
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+            margin-bottom: 1rem;
+        }
+
+        .form-check:hover {
+            background: #f1f5f9;
+            border-color: var(--border-color);
+        }
+
+        .form-check-input {
+            width: 1.25rem;
+            height: 1.25rem;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .form-check-label {
+            flex: 1;
+            margin: 0;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        .btn-group-modern {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .btn-modern {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            min-width: 120px;
+            justify-content: center;
+        }
+
+        .btn-primary-modern {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            color: white;
+        }
+
+        .btn-secondary-modern {
+            background: white;
+            color: var(--secondary-color);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary-modern:hover {
+            background: var(--light-bg);
+            border-color: var(--secondary-color);
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .text-danger {
+            color: var(--danger-color);
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: block;
+            font-weight: 500;
+        }
+
+        .progress-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+
+        .progress-step {
+            flex: 1;
+            height: 4px;
+            background: var(--border-color);
+            border-radius: 2px;
+            margin: 0 0.25rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .progress-step.active {
+            background: var(--primary-color);
+        }
+
+        @@media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .form-body {
+                padding: 1.5rem;
+            }
+
+            .form-header {
+                padding: 1.5rem;
+            }
+
+            .form-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .btn-group-modern {
+                flex-direction: column-reverse;
+            }
+
+            .btn-modern {
+                width: 100%;
+            }
+        }
+
+        .required-indicator {
+            color: var(--danger-color);
+            margin-left: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <h1>@ViewData["Title"]</h1>
+            <div class="subtitle">Complete the form below to manage student information</div>
+        </div>
+
+        <div class="form-body">
+            <div class="progress-indicator">
+                <div class="progress-step active"></div>
+                <div class="progress-step active"></div>
+                <div class="progress-step"></div>
+                <div class="progress-step"></div>
+            </div>
+
+            <form asp-controller="Student" asp-action="StudentSave" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="StudentID" />
+
+                <!-- Personal Information Section -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="bi bi-person-circle"></i>
+                        Personal Information
+                    </h2>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="EnrollmentNo" class="form-label">
+                                    Enrollment Number <span class="required-indicator">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <i class="bi bi-card-text input-icon"></i>
+                                    <input asp-for="EnrollmentNo" class="form-control has-icon" placeholder="Enter enrollment number" />
+                                </div>
+                                <span asp-validation-for="EnrollmentNo" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Name" class="form-label">
+                                    Full Name <span class="required-indicator">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <i class="bi bi-person input-icon"></i>
+                                    <input asp-for="Name" class="form-control has-icon" placeholder="Enter full name" />
+                                </div>
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Email" class="form-label">
+                                    Email Address <span class="required-indicator">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <i class="bi bi-envelope input-icon"></i>
+                                    <input asp-for="Email" type="email" class="form-control has-icon" placeholder="Enter email address" />
+                                </div>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="MobileNo" class="form-label">
+                                    Mobile Number <span class="required-indicator">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <i class="bi bi-phone input-icon"></i>
+                                    <input asp-for="MobileNo" class="form-control has-icon" placeholder="Enter mobile number" />
+                                </div>
+                                <span asp-validation-for="MobileNo" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Gender" class="form-label">
+                            Gender <span class="required-indicator">*</span>
+                        </label>
+                        <select asp-for="Gender" class="form-select">
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <span asp-validation-for="Gender" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Address" class="form-label">Address</label>
+                        <textarea asp-for="Address" class="form-control" placeholder="Enter complete address" rows="3"></textarea>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Academic Information Section -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="bi bi-mortarboard"></i>
+                        Academic Information
+                    </h2>
+
+                    <div class="form-group">
+                        <label asp-for="Percentage12th" class="form-label">
+                            12th Grade Percentage
+                        </label>
+                        <div class="input-group">
+                            <i class="bi bi-percent input-icon"></i>
+                            <input asp-for="Percentage12th" type="number" step="0.01" min="0" max="100" class="form-control has-icon" placeholder="Enter percentage" />
+                        </div>
+                        <span asp-validation-for="Percentage12th" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Security Section -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="bi bi-shield-lock"></i>
+                        Security Information
+                    </h2>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Password" class="form-label">
+                                    Password <span class="required-indicator">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <i class="bi bi-key input-icon"></i>
+                                    <input asp-for="Password" type="password" class="form-control has-icon" placeholder="Enter password" />
+                                </div>
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="ConfirmPassword" class="form-label">
+                                    Confirm Password <span class="required-indicator">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <i class="bi bi-key input-icon"></i>
+                                    <input asp-for="ConfirmPassword" type="password" class="form-control has-icon" placeholder="Confirm password" />
+                                </div>
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preferences Section -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="bi bi-gear"></i>
+                        Preferences
+                    </h2>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <input asp-for="PlayingCricket" class="form-check-input" />
+                                <label asp-for="PlayingCricket" class="form-check-label">
+                                    <i class="bi bi-trophy text-success me-2"></i>
+                                    Playing Cricket
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <input asp-for="LiveInRajkot" class="form-check-input" />
+                                <label asp-for="LiveInRajkot" class="form-check-label">
+                                    <i class="bi bi-geo-alt text-primary me-2"></i>
+                                    Live in Rajkot
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <input asp-for="IsActive" class="form-check-input" />
+                                <label asp-for="IsActive" class="form-check-label">
+                                    <i class="bi bi-check-circle text-success me-2"></i>
+                                    Active Status
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-group-modern">
+                    <a asp-action="StudentList" class="btn-modern btn-secondary-modern">
+                        <i class="bi bi-arrow-left"></i>
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn-modern btn-primary-modern">
+                        <i class="bi bi-check-lg"></i>
+                        Save Student
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Enhanced form interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth focus animations
+            const inputs = document.querySelectorAll('.form-control, .form-select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'scale(1.02)';
+                });
+
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'scale(1)';
+                });
+            });
+
+            // Progress indicator animation
+            const progressSteps = document.querySelectorAll('.progress-step');
+            let completedSections = 0;
+
+            function updateProgress() {
+                const sections = document.querySelectorAll('.form-section');
+                completedSections = 0;
+
+                sections.forEach(section => {
+                    const inputs = section.querySelectorAll('input[required], select[required]');
+                    let sectionComplete = true;
+
+                    inputs.forEach(input => {
+                        if (!input.value.trim()) {
+                            sectionComplete = false;
+                        }
+                    });
+
+                    if (sectionComplete) {
+                        completedSections++;
+                    }
+                });
+
+                progressSteps.forEach((step, index) => {
+                    if (index < completedSections) {
+                        step.classList.add('active');
+                    } else {
+                        step.classList.remove('active');
+                    }
+                });
+            }
+
+            // Update progress on input change
+            inputs.forEach(input => {
+                input.addEventListener('input', updateProgress);
+                input.addEventListener('change', updateProgress);
+            });
+
+            // Initial progress update
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

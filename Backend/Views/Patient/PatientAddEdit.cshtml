@@ -1,0 +1,120 @@
+﻿@model Hospital_Management_System.Models.PatientModel
+
+<!-- Breadcrumb and Title Section -->
+<div class="container mt-4">
+    <h4 class="fw-bold text-primary"><i class="bi bi-person-plus-fill me-2"></i>Patient Add/Edit</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light px-3 py-2 rounded shadow-sm">
+            <li class="breadcrumb-item"><a href="/Dashboard" class="text-decoration-none text-dark">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/Patient/PatientList" class="text-decoration-none text-dark">Patient List</a></li>
+            <li class="breadcrumb-item active text-primary" aria-current="page">Patient Add/Edit</li>
+        </ol>
+    </nav>
+</div>
+
+<!-- Patient Form Section -->
+<div class="container mt-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-clipboard-plus me-2"></i>Enter Patient Details</h5>
+        </div>
+        <div class="card-body">
+            <form asp-action="PatientAddEdit" asp-controller="Patient" method="post">
+                @Html.HiddenFor(m => m.PatientID)
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label asp-for="Name" class="form-label fw-semibold"></label>
+                        <input asp-for="Name" class="form-control" placeholder="Enter full name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="DateOfBirth" class="form-label fw-semibold"></label>
+                        <input asp-for="DateOfBirth" type="date" class="form-control" />
+                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Gender" class="form-label fw-semibold"></label>
+                        <select asp-for="Gender" class="form-select">
+                            <option value="">-- Select Gender --</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Other</option>
+                        </select>
+                        <span asp-validation-for="Gender" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Email" class="form-label fw-semibold"></label>
+                        <input asp-for="Email" class="form-control" placeholder="example@domain.com" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Phone" class="form-label fw-semibold"></label>
+                        <input asp-for="Phone" class="form-control" placeholder="10-digit number" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="City" class="form-label fw-semibold"></label>
+                        <input asp-for="City" class="form-control" placeholder="City name" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="State" class="form-label fw-semibold"></label>
+                        <input asp-for="State" class="form-control" placeholder="State name" />
+                        <span asp-validation-for="State" class="text-danger"></span>
+                    </div>
+
+                    @* <div class="col-md-6">
+                        <label asp-for="UserID" class="form-label fw-semibold"></label>
+                        <input asp-for="UserID" class="form-control" placeholder="Associated User ID" />
+                        <span asp-validation-for="UserID" class="text-danger"></span>
+                    </div> *@
+
+                    <div class="form-group">
+                        <label asp-for="UserID"></label>
+                        <select asp-for="UserID" asp-items="@(new SelectList(ViewBag.UserList, "UserID", "UserName"))" class="form-control">
+                            <option value="">-- Select User --</option>
+                        </select>
+                        <span asp-validation-for="UserID" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label asp-for="Address" class="form-label fw-semibold"></label>
+                        <textarea asp-for="Address" class="form-control" rows="3" placeholder="Complete address"></textarea>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input asp-for="IsActive" class="form-check-input" />
+                            <label asp-for="IsActive" class="form-check-label"></label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-save2 me-1"></i> Save Patient
+                    </button>
+                    <a asp-action="PatientList" asp-controller="Patient" class="btn btn-secondary ms-2 px-4">
+                        <i class="bi bi-arrow-left me-1"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

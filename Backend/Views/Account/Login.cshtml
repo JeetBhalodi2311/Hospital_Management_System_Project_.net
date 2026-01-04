@@ -1,0 +1,338 @@
+﻿@model LoginViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Login - HMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        /* Background layer */
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/assets/img/bg3.jpg') no-repeat center center fixed;
+            background-size: cover;
+            filter: blur(8px);
+            z-index: -1; /* keep behind card */
+        }
+
+        /* Card styling */
+        .card {
+            background: rgba(255, 255, 255, 0.85); /* transparent white */
+            border-radius: 15px;
+            backdrop-filter: blur(4px); /* subtle glass effect */
+        }
+    </style>
+</head>
+<body>
+    <!-- Blurred Background -->
+    <div class="bg-image"></div>
+
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card shadow-lg p-4" style="width: 100%; max-width: 450px;">
+            <h3 class="text-center text-primary mb-3">Hospital Management System</h3>
+            <h4 class="text-center mb-4">Login to Your Account</h4>
+
+            <!-- Error message -->
+            @if (!ViewData.ModelState.IsValid && ViewData.ModelState[""]?.Errors.Count > 0)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @foreach (var error in ViewData.ModelState[""].Errors)
+                    {
+                        <div>@error.ErrorMessage</div>
+                    }
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <form asp-action="Login" method="post" novalidate>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input asp-for="Password" type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+                <div class="text-center mt-3">
+                    <a href="/Account/Register" class="text-decoration-none">New user? Register here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+
+@* @model LoginViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HMS - Hospital Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .login-container {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+        }
+
+        .brand-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+            .form-control:focus {
+                border-color: #667eea;
+                box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            }
+
+        .btn-login {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+            .btn-login:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            }
+
+        .input-group-text {
+            border: 2px solid #e9ecef;
+            border-right: none;
+            border-radius: 12px 0 0 12px;
+            background: #f8f9fa;
+        }
+
+        .form-control-icon {
+            border-left: none;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .footer-links {
+            border-top: 1px solid #e9ecef;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .company-info {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @@media (max-width: 768px) {
+            .login-container
+
+        {
+            margin: 1rem;
+        }
+
+        .company-info {
+            display: none;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row min-vh-100 align-items-center justify-content-center">
+            <div class="col-lg-10 col-xl-8">
+                <div class="row">
+                    <!-- Company Information Side -->
+                    <div class="col-lg-6 d-none d-lg-block">
+                        <div class="company-info h-100 d-flex flex-column justify-content-center">
+                            <div class="text-center mb-4">
+                                <div class="brand-logo mx-auto mb-3">
+                                    <i class="bi bi-hospital text-white" style="font-size: 2.5rem;"></i>
+                                </div>
+                                <h2 class="text-dark fw-bold">HealthCare Pro</h2>
+                                <p class="text-muted fs-5">Advanced Hospital Management System</p>
+                            </div>
+
+                            <div class="row text-center">
+                                <div class="col-4">
+                                    <div class="p-3">
+                                        <i class="bi bi-shield-check text-primary fs-1 mb-2"></i>
+                                        <h6 class="fw-semibold">Secure</h6>
+                                        <small class="text-muted">Bank-level security</small>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="p-3">
+                                        <i class="bi bi-lightning text-warning fs-1 mb-2"></i>
+                                        <h6 class="fw-semibold">Fast</h6>
+                                        <small class="text-muted">Real-time processing</small>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="p-3">
+                                        <i class="bi bi-graph-up text-success fs-1 mb-2"></i>
+                                        <h6 class="fw-semibold">Efficient</h6>
+                                        <small class="text-muted">Streamlined workflow</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Login Form Side -->
+                    <div class="col-lg-6">
+                        <div class="login-container rounded-4 p-4 p-lg-5">
+                            <!-- Mobile Logo -->
+                            <div class="d-lg-none text-center mb-4">
+                                <div class="brand-logo">
+                                    <i class="bi bi-hospital text-white" style="font-size: 2rem;"></i>
+                                </div>
+                                <h4 class="fw-bold text-dark">HealthCare Pro</h4>
+                            </div>
+
+                            <div class="text-center mb-4">
+                                <h3 class="fw-bold text-dark">Welcome Back</h3>
+                                <p class="text-muted">Please sign in to your account</p>
+                            </div>
+
+                            @if (ViewBag.ErrorMessage != null)
+                            {
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <i class="bi bi-exclamation-triangle me-2"></i>
+                                    @ViewBag.ErrorMessage
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            }
+
+                            <form asp-action="Login" method="post" novalidate>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-dark">Email Address</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-envelope"></i>
+                                        </span>
+                                        <input asp-for="Email" type="email" class="form-control form-control-icon"
+                                               placeholder="Enter your email" />
+                                    </div>
+                                    <span asp-validation-for="Email" class="text-danger small"></span>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold text-dark">Password</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-lock"></i>
+                                        </span>
+                                        <input asp-for="Password" type="password" class="form-control form-control-icon"
+                                               placeholder="Enter your password" />
+                                    </div>
+                                    <span asp-validation-for="Password" class="text-danger small"></span>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                                        <label class="form-check-label text-muted" for="rememberMe">
+                                            Remember me
+                                        </label>
+                                    </div>
+                                    <a href="#" class="text-decoration-none">Forgot Password?</a>
+                                </div>
+
+                                <button type="submit" class="btn btn-login text-white w-100 mb-3">
+                                    <i class="bi bi-box-arrow-in-right me-2"></i>
+                                    Sign In
+                                </button>
+                            </form>
+
+                            <div class="footer-links text-center">
+                                <p class="text-muted mb-2">Don't have an account?</p>
+                                <a href="/Account/Register" class="btn btn-outline-secondary rounded-pill px-4">
+                                    <i class="bi bi-person-plus me-2"></i>
+                                    Create Account
+                                </a>
+
+                                <div class="mt-4 pt-3 border-top">
+                                    <div class="row text-center">
+                                        <div class="col-4">
+                                            <small class="text-muted">
+                                                <i class="bi bi-telephone me-1"></i>
+                                                Support: 24/7
+                                            </small>
+                                        </div>
+                                        <div class="col-4">
+                                            <small class="text-muted">
+                                                <i class="bi bi-shield-check me-1"></i>
+                                                Secure Login
+                                            </small>
+                                        </div>
+                                        <div class="col-4">
+                                            <small class="text-muted">
+                                                <i class="bi bi-globe me-1"></i>
+                                                Multi-language
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</body>
+</html> *@

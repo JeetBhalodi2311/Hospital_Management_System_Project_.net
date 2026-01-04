@@ -1,0 +1,204 @@
+﻿@* @model Hospital_Management_System.Models.AppointmentModel
+
+<!-- Breadcrumb and Title Section -->
+<div class="container mt-4">
+    <h4 class="fw-bold text-primary"><i class="bi bi-calendar-plus me-2"></i>Appointment Add/Edit</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light px-3 py-2 rounded shadow-sm">
+            <li class="breadcrumb-item"><a href="/Dashboard" class="text-decoration-none text-dark">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/Appointment/AppointmentList" class="text-decoration-none text-dark">Appointment List</a></li>
+            <li class="breadcrumb-item active text-primary" aria-current="page">Appointment Add/Edit</li>
+        </ol>
+    </nav>
+</div>
+
+<!-- Form Section -->
+<div class="container mt-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-clipboard-check me-2"></i>Enter Appointment Details</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label asp-for="DoctorID" class="form-label fw-semibold">Doctor ID</label>
+                        <input asp-for="DoctorID" type="number" class="form-control" placeholder="Enter Doctor ID" required />
+                        <span asp-validation-for="DoctorID" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="PatientID" class="form-label fw-semibold">Patient ID</label>
+                        <input asp-for="PatientID" type="number" class="form-control" placeholder="Enter Patient ID" required />
+                        <span asp-validation-for="PatientID" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="AppointmentDate" class="form-label fw-semibold">Appointment Date</label>
+                        <input asp-for="AppointmentDate" type="datetime-local" class="form-control" required />
+                        <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="AppointmentStatus" class="form-label fw-semibold">Status</label>
+                        <input asp-for="AppointmentStatus" type="text" class="form-control" placeholder="Enter Status (e.g. Pending, Completed, Cancelled)" required />
+                        <span asp-validation-for="AppointmentStatus" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label asp-for="Description" class="form-label fw-semibold">Description</label>
+                        <textarea asp-for="Description" rows="3" class="form-control" placeholder="Write a short description..."></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="SpecialRemarks" class="form-label fw-semibold">Special Remarks</label>
+                        <input asp-for="SpecialRemarks" type="text" class="form-control" placeholder="Any special notes..." />
+                        <span asp-validation-for="SpecialRemarks" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="TotalConsultedAmount" class="form-label fw-semibold">Total Consulted Amount</label>
+                        <input asp-for="TotalConsultedAmount" type="number" step="0.01" class="form-control" placeholder="₹ 0.00" />
+                        <span asp-validation-for="TotalConsultedAmount" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="UserID" class="form-label fw-semibold">User ID</label>
+                        <input asp-for="UserID" type="number" class="form-control" placeholder="Enter User ID" required />
+                        <span asp-validation-for="UserID" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-save2 me-1"></i> Save Appointment
+                    </button>
+                    <a href="/Appointment/AppointmentList" class="btn btn-secondary ms-2 px-4">
+                        <i class="bi bi-arrow-left me-1"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> *@
+
+
+@model Hospital_Management_System.Models.AppointmentModel
+
+<div class="container mt-4">
+    <h4 class="fw-bold text-primary"><i class="bi bi-calendar-plus me-2"></i>Appointment Add/Edit</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light px-3 py-2 rounded shadow-sm">
+            <li class="breadcrumb-item"><a href="/Dashboard" class="text-decoration-none text-dark">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/Appointment/AppointmentList" class="text-decoration-none text-dark">Appointment List</a></li>
+            <li class="breadcrumb-item active text-primary" aria-current="page">Appointment Add/Edit</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="container mt-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-clipboard-check me-2"></i>Enter Appointment Details</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="row g-3">
+
+                    @* <div class="col-md-6">
+                        <label asp-for="DoctorID" class="form-label fw-semibold"></label>
+                        <input asp-for="DoctorID" type="number" class="form-control" placeholder="Enter Doctor ID" />
+                        <span asp-validation-for="DoctorID" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="PatientID" class="form-label fw-semibold"></label>
+                        <input asp-for="PatientID" type="number" class="form-control" placeholder="Enter Patient ID" />
+                        <span asp-validation-for="PatientID" class="text-danger"></span>
+                    </div> *@
+
+                    <div class="form-group">
+                        <label>Doctor</label>
+                        <select asp-for="DoctorID" class="form-control"
+                                asp-items="@(new SelectList(ViewBag.DoctorList, "DoctorID", "Name"))">
+                            <option value="">-- Select Doctor --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Patient</label>
+                        <select asp-for="PatientID" class="form-control"
+                                asp-items="@(new SelectList(ViewBag.PatientList, "PatientID", "Name"))">
+                            <option value="">-- Select Patient --</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="AppointmentDate" class="form-label fw-semibold"></label>
+                        <input asp-for="AppointmentDate" type="datetime-local" class="form-control" />
+                        <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="AppointmentStatus" class="form-label fw-semibold"></label>
+                        <select asp-for="AppointmentStatus" class="form-select">
+                            <option value="">-- Select Status --</option>
+                            <option>Pending</option>
+                            <option>Completed</option>
+                            <option>Cancelled</option>
+                        </select>
+                        <span asp-validation-for="AppointmentStatus" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label asp-for="Description" class="form-label fw-semibold"></label>
+                        <textarea asp-for="Description" rows="3" class="form-control" placeholder="Write a short description..."></textarea>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="SpecialRemarks" class="form-label fw-semibold"></label>
+                        <input asp-for="SpecialRemarks" type="text" class="form-control" placeholder="Any special notes..." />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="TotalConsultedAmount" class="form-label fw-semibold"></label>
+                        <input asp-for="TotalConsultedAmount" type="number" step="0.01" class="form-control" placeholder="₹ 0.00" />
+                    </div>
+
+                    @* <div class="col-md-6">
+                        <label asp-for="UserID" class="form-label fw-semibold"></label>
+                        <input asp-for="UserID" type="number" class="form-control" placeholder="Enter User ID" />
+                        <span asp-validation-for="UserID" class="text-danger"></span>
+                    </div> *@
+
+                    <div class="form-group">
+                        <label asp-for="UserID"></label>
+                        <select asp-for="UserID" asp-items="@(new SelectList(ViewBag.UserList, "UserID", "UserName"))" class="form-control">
+                            <option value="">-- Select User --</option>
+                        </select>
+                        <span asp-validation-for="UserID" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-save2 me-1"></i> Save Appointment
+                    </button>
+                    <a href="/Appointment/AppointmentList" class="btn btn-secondary ms-2 px-4">
+                        <i class="bi bi-arrow-left me-1"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
